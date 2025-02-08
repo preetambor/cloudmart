@@ -1,11 +1,13 @@
-FROM node:16-alpine as build
+#FROM node:16-alpine as build
+FROM public.ecr.aws/docker/library/alpine:latest
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM node:16-alpine
+#FROM node:16-alpine
+FROM public.ecr.aws/docker/library/alpine:latest
 WORKDIR /app
 RUN npm install -g serve
 COPY --from=build /app/dist /app
